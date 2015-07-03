@@ -8,7 +8,7 @@ import (
 )
 
 func Test_SetData(t *testing.T) {
-	c := cache.New("goleveldb", false)
+	c := cache.New("var")
 	for i := 0; i < 1000; i++ {
 		key_str := fmt.Sprint("key", i)
 		val_str := fmt.Sprint("value", i)
@@ -19,7 +19,7 @@ func Test_SetData(t *testing.T) {
 }
 
 func Test_GetData(t *testing.T) {
-	c := cache.New("goleveldb", false)
+	c := cache.New("var")
 	x, err := c.GetData("key999")
 	assert.Nil(t, err, "no error")
 	assert.Equal(t, "value999", x)
@@ -27,14 +27,14 @@ func Test_GetData(t *testing.T) {
 }
 
 func Test_DeleteData(t *testing.T) {
-	c := cache.New("goleveldb", false)
+	c := cache.New("var")
 	err := c.DeleteData("key999")
 	assert.Nil(t, err, "no error")
 	c.CloseConnection()
 }
 
 func Test_UpdateTTL(t *testing.T) {
-	c := cache.New("goleveldb", false)
+	c := cache.New("var")
 	_, err := c.UpdateTTL("key999", 20000)
 	assert.Nil(t, err, "no error")
 	c.CloseConnection()
