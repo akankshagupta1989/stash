@@ -1,7 +1,10 @@
 package cache
 
-import "github.com/siddontang/ledisdb/ledis"
-import "github.com/siddontang/ledisdb/config"
+import (
+	"fmt"
+	"github.com/siddontang/ledisdb/config"
+	"github.com/siddontang/ledisdb/ledis"
+)
 
 type Cache struct {
 	cfg              *config.Config
@@ -12,10 +15,10 @@ type Cache struct {
 /* New(string,bool) initializes a cache object,
 takes as input database name and a boolean parameter stating whether a compression is needed or not.
 */
-func New(dbName string, isCompression bool) *Cache {
+func New(dataDir string) *Cache {
 	cfg := config.NewConfigDefault()
-	cfg.DBName = dbName
-	cfg.Replication.Compression = isCompression
+	dataDir = fmt.Sprint(cfg.DataDir, "/", dataDir)
+	cfg.DataDir = dataDir
 	ledis_connection, err := ledis.Open(cfg)
 	if err != nil {
 		panic("Resource temporary unavailable, error opening a Connection!!!")
